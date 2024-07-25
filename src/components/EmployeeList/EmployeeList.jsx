@@ -11,7 +11,7 @@ const EmployeeList = () => {
     const [show, setShow] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [employeesPerPage] = useState(1);
+    const [employeesPerPage] = useState(5);
     const previousEmployees = useRef([]); // To track previous state of employees
 
     const handleShow = () => setShow(true);
