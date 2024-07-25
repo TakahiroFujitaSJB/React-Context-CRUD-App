@@ -1,6 +1,7 @@
 # CRUD Employee List Management App using React Context
 
-Simple CRUD React Application using React Context library and not Redux with Local Storage.
+Simple CRUD React Application using React Context library and not Redux.
+App also set up with Local Storage.
 
 ## Available Scripts
 
