@@ -1,26 +1,40 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap'
+import { Button, Alert } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import { EmployeeContext } from '../../contexts/EmployeeContext';
 import Employee from '../Employee/Employee';
 import AddForm from '../AddForm/AddForm';
+import Pagination from '../pagination/pagination';
 
 const EmployeeList = () => {
 
-    const{ employees } = useContext(EmployeeContext);
+    const { sortedEmployees } = useContext(EmployeeContext);
     const [show, setShow] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [employeesPerPage] = useState(1);
 
-    const handleShow = () => {
-        setShow(true);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const handleShowAlert = () => {
+        setShowAlert(true);
+        setTimeout(() => {
+            setShowAlert(false);
+        }, 4000)
     }
-    const handleClose = () => {
-        setShow(false);
-    }
+    
 
     useEffect(() => {
         handleClose()
-    }, [employees])
+        return () => {
+            handleShowAlert();
+        }
+    }, [sortedEmployees])
 
+    const  indexOfLastEmployee = currentPage * employeesPerPage;
+    const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
+    const currentEmployees = sortedEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+    const totalPagesNum = Math.ceil(sortedEmployees.length / employeesPerPage);
 
     return (
         <div className='employeeList'>
@@ -40,6 +54,11 @@ const EmployeeList = () => {
                 </div>
             </div>
 
+            <Alert show={showAlert} variant='success'> 
+                Employee List Updated Successfully!
+            </Alert>
+
+
             <table className="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -52,7 +71,7 @@ const EmployeeList = () => {
                 </thead>
                 <tbody>
                     {
-                        employees.map(employee => (
+                        currentEmployees.map(employee => (
                             <tr key={employee.id}>
                                 <Employee employee={employee} />
                             </tr>
@@ -60,6 +79,13 @@ const EmployeeList = () => {
                     }
                 </tbody>
             </table>
+
+            <Pagination 
+                pages = {totalPagesNum} 
+                setCurrentPage={setCurrentPage}
+                currentEmployees={currentEmployees}
+                sortedEmployees={sortedEmployees}
+                />
 
             <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>

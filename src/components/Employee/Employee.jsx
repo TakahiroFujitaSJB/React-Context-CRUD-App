@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal';
 import { EmployeeContext } from '../../contexts/EmployeeContext';
@@ -17,6 +17,10 @@ const Employee = ({ employee }) => {
         setShow(false);
     }
 
+    useEffect(() => {
+        handleClose()
+    }, [employee])
+
     return (
         <React.Fragment>
 
@@ -25,11 +29,11 @@ const Employee = ({ employee }) => {
             <td>{employee.address}</td>
             <td>{employee.phone}</td>
             <td>
-                <button className='btn text-warning btn-act' onClick{() => handleShow()} data-toggle="modal" title="Edit">
+                <button className='btn text-warning btn-act' onClick={() => handleShow()} data-toggle="modal" title="Edit this Employee">
                     Edit
                 </button>
 
-                <button className='btn text-danger btn-act' onClick={() => deleteEmployee(employee.id)} data-toggle="modal" title="Delete">
+                <button className='btn text-danger btn-act' onClick={() => deleteEmployee(employee.id)} data-toggle="modal" title=" WARNING: Delete this Employee " >
                     Delete
                 </button>
             </td>
@@ -42,7 +46,7 @@ const Employee = ({ employee }) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <EditForm />
+                    <EditForm employee={employee}/>
                 </Modal.Body>
 
                 <Modal.Footer>
