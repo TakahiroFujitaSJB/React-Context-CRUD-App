@@ -15,7 +15,7 @@ const EditForm = ( {employee} ) => {
 
     const {updateEmployee} = useContext(EmployeeContext);
 
-    const updatedEmployee = {id, name, email, phone};
+    const updatedEmployee = {id, name, email, address, phone};
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -50,8 +50,10 @@ const EditForm = ( {employee} ) => {
                     placeholder="Address"
                     rows={3}
                     name="address"
-                    onChange={(e) => setAddress(e.target.value)}
                     value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    
                     
                 />
             </Form.Group>
