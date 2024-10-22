@@ -3,6 +3,14 @@
 Simple CRUD React Application using React Context library and not Redux.
 App also set up with Local Storage.
 
+Demo Video：
+
+
+
+https://github.com/user-attachments/assets/929a2204-9cd7-419d-99c8-bd3fe7ac9dad
+
+
+
 ## Available Scripts
 
 In the project directory, you can run:
